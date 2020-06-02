@@ -10,9 +10,13 @@ var ques = new Schema({
         type:String,
         required:true,
     },
-    postion:{
+    position:{
         type:String,     // Student or teacher
         required:true,
+    },
+    status:{
+        type:String,
+        required:true,  // to show everyone or quiz
     }
 })
 

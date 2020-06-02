@@ -2,6 +2,14 @@ var mongoose = require("mongoose")
 var Schema = mongoose.Schema;
 
 var ans = new Schema({
+    askedby:{
+        type:String,
+        required:true,
+    },
+    question:{
+        type:String,
+        required:true,
+    },
     answer:{
         type: String,
         required: true,
@@ -10,9 +18,13 @@ var ans = new Schema({
         type:String,
         required:true,
     },
-    postion:{
+    position:{
         type:String,     // Student or teacher
         required:true,
+    },
+    status:{
+        type:String,
+        required:true,  // to show everyone or quiz
     }
 })
 
