@@ -3,7 +3,7 @@ var studentModel = require("../models/student")
 var quesModel = require("../models/question")
 var ansModel = require("../models/answers")
 var List = require("../models/todo")
-
+var TeacherReview = require("../models/teacherreview")
 var router = express.Router();
 var mongoose = require("mongoose");
 
@@ -128,6 +128,41 @@ router.post("/posttodo",(req,res)=>{
 router.get("/gettodo/:user",(req,res)=>{
     List.find({username:req.params.user}).then((data)=>{
         res.send(data);
+    })
+})
+
+// Delete Todo
+router.post("/deletetodo",(req,res)=>{
+    List.findOneAndRemove({username:req.body.username,todos:req.body.todos}).then(()=>{
+        res.send(true)
+    }).catch((err)=>{
+        res.send(false)
+    })
+})
+
+// student post teacher review
+
+router.post("/reviewteacher",(req,res)=>{
+    var x= new TeacherReview({
+        student:req.body.student,
+        review:req.body.review,
+        teacher:req.body.teacher,
+    });
+    x.save().then(()=>{
+        res.send(true);
+    }).catch((err)=>{
+        res.send(false);
+    })
+})
+
+// Get teacher Review
+
+router.get("/reviewteacher/:teac",(req,res)=>{
+    console.log("here");
+    TeacherReview.find({teacher:req.params.teac}).then((data)=>{
+        res.send(data);
+    }).catch((err)=>{
+        res.send(false);
     })
 })
 

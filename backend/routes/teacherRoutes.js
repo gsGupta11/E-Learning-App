@@ -4,7 +4,7 @@ var quesModel = require("../models/question")
 var ansModel = require("../models/answers")
 var List = require("../models/todo")
 var teacherModel = require("../models/teacher")
-
+var ReviewStudent = require("../models/studentreview")
 
 var router = express.Router();
 var mongoose = require("mongoose");
@@ -30,12 +30,40 @@ router.post("/postteacher",(req,res)=>{
     })
 })
 
-router.get("/teacher/:id",(req,res)=>{
-    teacherModel.findOne({username:req.params.user}).then((data)=>{
+// Teacher Login    
+
+router.get("/teacher/:username",(req,res)=>{
+    teacherModel.findOne({username:req.params.username}).then((data)=>{
         res.send(true);
     }).catch((err)=>{
         res.send(false);
     })
 })
+
+
+// teacher post student review
+
+router.post("/reviewstudent",(req,res)=>{
+    var x= new ReviewStudent({
+        student:req.body.student,
+        review:req.body.review,
+        teacher:req.body.teacher,
+    });
+    x.save().then(()=>{
+        res.send(true);
+    }).catch((err)=>{
+        res.send(false);
+    })
+})
+
+// Get student Review
+router.get("/reviewstud/:stud",(req,res)=>{
+    ReviewStudent.find({student:req.params.stud}).then((data)=>{
+        res.send(data);
+    }).catch((err)=>{
+        res.send(false);
+    })
+})
+
 
 module.exports = router;
